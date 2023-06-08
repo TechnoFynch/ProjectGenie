@@ -19,7 +19,7 @@ app.listen(PORT, () => {
 });
 
 mongoose
-  .connect("mongodb://localhost:27017/", {
+  .connect("mongodb://mongo-db/", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
