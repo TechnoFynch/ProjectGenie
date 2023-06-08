@@ -20,9 +20,8 @@ export default function Home() {
             <div className="card">
               <h5>Project Genie</h5>
               <p>
-                Welcome to your Project Genie Dashboard, and Deployed by
-                Jenkins. Here&apos;s a quick look at recent updates on your
-                submissions.
+                Welcome to your Project Genie Dashboard. Here&apos;s a quick
+                look at recent updates on your submissions.
               </p>
             </div>
           </div>
