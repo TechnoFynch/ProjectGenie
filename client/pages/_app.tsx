@@ -8,6 +8,10 @@ import "primeflex/primeflex.css";
 import "primeicons/primeicons.css";
 import "../styles/layout/layout.scss";
 
+import { PersistGate } from "redux-persist/integration/react";
+import store, { persistor } from "@/utils/store";
+import { Provider } from "react-redux";
+
 type Props = AppProps & {
   Component: Page;
 };
@@ -15,17 +19,25 @@ type Props = AppProps & {
 export default function MyApp({ Component, pageProps }: Props) {
   if (Component.getLayout) {
     return (
-      <LayoutProvider>
-        {Component.getLayout(<Component {...pageProps} />)}
-      </LayoutProvider>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <LayoutProvider>
+            {Component.getLayout(<Component {...pageProps} />)}
+          </LayoutProvider>
+        </PersistGate>
+      </Provider>
     );
   } else {
     return (
-      <LayoutProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </LayoutProvider>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <LayoutProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </LayoutProvider>
+        </PersistGate>
+      </Provider>
     );
   }
 }

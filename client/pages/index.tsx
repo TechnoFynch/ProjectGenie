@@ -1,11 +1,12 @@
 import Head from "next/head";
-import Image from "next/image";
 import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
+import { useAppSelector } from "@/utils/hooks";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const user = useAppSelector((state) => state.user);
+
   return (
     <>
       <Head>
@@ -20,8 +21,8 @@ export default function Home() {
             <div className="card">
               <h5>Project Genie</h5>
               <p>
-                Welcome to your Project Genie Dashboard, and Deployed by
-                Jenkins. Here&apos;s a quick look at recent updates on your
+                Welcome to your Project Genie Dashboard.
+                <br /> Here&apos;s a quick look at recent updates on your
                 submissions.
               </p>
             </div>
