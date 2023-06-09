@@ -1,12 +1,14 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const projectRouter = require("./routes/ProjectRouter");
 const authRouter = require("./routes/AuthRouter");
 
 dotenv.config();
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 
@@ -19,7 +21,7 @@ app.listen(PORT, () => {
 });
 
 mongoose
-  .connect("mongodb://mongo-db/", {
+  .connect("mongodb://localhost:27017/", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
