@@ -6,6 +6,7 @@ import React, { useEffect, useContext } from "react";
 import { CSSTransition } from "react-transition-group";
 import { MenuContext } from "./context/menucontext";
 import { AppMenuItemProps } from "../types/types";
+import { useAppSelector } from "@/utils/hooks";
 
 const AppMenuitem = (props: AppMenuItemProps) => {
   const { activeMenu, setActiveMenu } = useContext(MenuContext);
@@ -16,23 +17,29 @@ const AppMenuitem = (props: AppMenuItemProps) => {
     : String(props.index);
   const isActiveRoute = item!.to && router.pathname === item!.to;
   const active = activeMenu === key || activeMenu.startsWith(key + "-");
+  const isAuth = Boolean(useAppSelector((state) => state.token));
 
   useEffect(() => {
-    if (item!.to && router.pathname === item!.to) {
-      setActiveMenu(key);
-    }
-
-    const onRouteChange = (url: string) => {
-      if (item!.to && item!.to === url) {
+    if (!isAuth) {
+      router.push("/login");
+    } else {
+      // TODO: Check if user is allowd for the particular menu item
+      if (item!.to && router.pathname === item!.to) {
         setActiveMenu(key);
       }
-    };
 
-    router.events.on("routeChangeComplete", onRouteChange);
+      const onRouteChange = (url: string) => {
+        if (item!.to && item!.to === url) {
+          setActiveMenu(key);
+        }
+      };
 
-    return () => {
-      router.events.off("routeChangeComplete", onRouteChange);
-    };
+      router.events.on("routeChangeComplete", onRouteChange);
+
+      return () => {
+        router.events.off("routeChangeComplete", onRouteChange);
+      };
+    }
   }, []);
 
   const itemClick = (
